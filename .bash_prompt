@@ -17,8 +17,9 @@ prompt_git() {
 	local hgstat_u=''; #Unknown
 	local hgstat_r=''; #Removed (AWOL)
 
-	if [ $(hg summary &>/dev/null; echo "${?}") == '0' ] ; then
-	  branchName="$(hg summary | awk '/^branch:/ {print $NF}')"
+	# For speed, run 'hg' as few times as possible:
+	branchName="$(hg branch)"
+	if [ -n "${branchName}" ] ; then
 	  s=$(hg status | awk 'BEGIN {a=m=u=r=0;}
 				/^A/  {a+=1;}
 				/^M/  {m+=1;}
