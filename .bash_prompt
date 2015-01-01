@@ -18,7 +18,7 @@ prompt_git() {
 	local hgstat_r=''; #Removed (AWOL)
 
 	# For speed, run 'hg' as few times as possible:
-	branchName="$(hg branch)"
+	branchName="$(hg branch &>/dev/null)"
 	if [ -n "${branchName}" ] ; then
 	  s=$(hg status | awk 'BEGIN {a=m=u=r=0;}
 				/^A/  {a+=1;}
