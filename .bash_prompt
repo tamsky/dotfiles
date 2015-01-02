@@ -17,6 +17,7 @@ prompt_git() {
 	local hgstat_u=''; #Unknown
 	local hgstat_r=''; #Removed (AWOL)
 
+#	set -x;
 	# For speed, run 'hg' as few times as possible:
 	branchName="$(hg branch 2>/dev/null)"
 	if [ -n "${branchName}" ] ; then
@@ -33,6 +34,7 @@ prompt_git() {
 	  [ -n "${s}" ] && s=" [${s}]";
 
 	  echo -e "${1}${branchName}${blue}${s}";
+#	  set +x;
 	  return;
 	fi
 
