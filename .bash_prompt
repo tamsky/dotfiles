@@ -9,32 +9,38 @@ elif infocmp xterm-256color >/dev/null 2>&1; then
 	export TERM='xterm-256color';
 fi;
 
+# args: $1 = non empty string denotes "debug on"
 prompt_git() {
 	local s='';
 	local branchName='';
-	local hgstat_a=''; #Added
-	local hgstat_m=''; #Modified
-	local hgstat_u=''; #Unknown
-	local hgstat_r=''; #Removed (AWOL)
+	local hgstat_modified='';
+	local hgstat_added='';
+	local hgstat_removed='';
+	local hgstat_missing=''; #deleted by non-hg command, but tracked
+	local hgstat_untracked='';
 
-#	set -x;
+	[[ $DEBUG ]] && set -x;
 	# For speed, run 'hg' as few times as possible:
 	branchName="$(hg branch 2>/dev/null)"
 	if [ -n "${branchName}" ] ; then
-	  s=$(hg status | awk 'BEGIN {a=m=u=r=0;}
-				/^A/  {a+=1;}
-				/^M/  {m+=1;}
-				/^\?/ {u+=1;}
-				/^!/  {r+=1;}
-				END { if (a>0) { printf("A") };
-				      if (m>0) { printf("M") };
-				      if (u>0) { printf("?") };
-				      if (r>0) { printf("!") }; }' )
+	  s=$(hg status | awk 'BEGIN {modified=added=removed=untracked=missing=0;}
+				/^M/  {modified+=1;}
+				/^A/  {added+=1;}
+				/^R/  {removed+=1;}
+				/^!/  {missing+=1;}
+				/^\?/ {untracked+=1;}
+				END { 
+				      if (modified > 0)  { printf("M") };
+                                      if (added > 0)     { printf("A") };
+				      if (removed > 0)   { printf("R") };
+				      if (missing > 0)   { printf("!") };
+				      if (untracked > 0) { printf("?") };
+                                    }' )
 
 	  [ -n "${s}" ] && s=" [${s}]";
 
 	  echo -e "${1}${branchName}${blue}${s}";
-#	  set +x;
+	  [[ $DEBUG ]] && set +x;
 	  return;
 	fi
 
@@ -83,6 +89,13 @@ prompt_git() {
 		return;
 	fi;
 }
+
+# If inside emacs, set a very simple prompt and exit:
+if [[ "${INSIDE_EMACS}" ]] ; then
+  PS1=": \u at \h in \w ;\n"
+  PS1+="$ "
+  return
+fi
 
 if tput setaf 1 &> /dev/null; then
 	tput sgr0; # reset colors
