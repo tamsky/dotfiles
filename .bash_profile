@@ -9,6 +9,9 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done;
 unset file;
 
+echo "this is .bash_profile on $FQDNHOSTNAME."
+echo ~/ is your home directory.
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
 
