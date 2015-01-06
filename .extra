@@ -29,6 +29,24 @@ function clean() {
   fi
 }
 
+# User interface goodies.
+function xtitle () {
+ echo -n -e "\033]2;$*\007"
+}
+function xseticon () {
+ echo -n -e "\033]1;$1\007"
+}
+function user_xtitle () {
+  if [ "$TERM" = "xterm" ]; then
+     xtitle $(whoami)@$HOST
+     xseticon $(whoami)@$HOST
+  fi
+}
+function ssh () {
+    command ssh "$@";
+    user_xtitle
+}
+
 
 ###################
 ## SHELL OPTIONS ##
@@ -100,6 +118,8 @@ alias purge='/bin/rm -f *~ .*~ #*'
 alias po='popd'
 alias pu='pushd'
 alias over='cd .. ; cd \!*'
+
+alias j='jobs -l '
 alias l='ls -ltr '
 alias ls='ls -F '
 alias lal='ls -alF '
