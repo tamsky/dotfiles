@@ -55,6 +55,17 @@ if [[ $(type -t diff) == "function" ]] ;
    unset diff
 }
 
+# `e` with no arguments opens the current directory in emacsclient, otherwise opens the
+# given location
+function e() {
+    if [[ $# -eq 0 ]]; then
+        emacs .;
+    else
+        emacs "$@";
+    fi;
+}
+
+
 ###################
 ## SHELL OPTIONS ##
 ###################
