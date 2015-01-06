@@ -24,7 +24,7 @@ shopt -s cdspell;
 for option in autocd globstar; do
 	shopt -s "$option" 2> /dev/null;
 done;
-unset option
+unset option;
 
 # Add tab completion for many Bash commands
 if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
