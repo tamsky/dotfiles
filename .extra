@@ -47,6 +47,13 @@ function ssh () {
     user_xtitle
 }
 
+# rename our default color-enabled 'diff' command to 'cdiff'
+if [[ $(type -t diff) == "function" ]] ;
+   # note leading 'c':
+   eval "c$(declare -f diff)"
+   # and restore the original file command:
+   unset diff
+}
 
 ###################
 ## SHELL OPTIONS ##
