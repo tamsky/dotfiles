@@ -18,6 +18,17 @@ function is_num() {
   esac
 }
 
+function clean() {
+  echo -n "Really clean this directory?";
+  read yorn;
+  if test "$yorn" = "y"; then
+      rm -f \#* *~ .*~ *.bak .*.bak *.tmp .*.tmp core a.out;
+      echo "Cleaned.";
+  else
+      echo "Not cleaned.";
+  fi
+}
+
 
 ###################
 ## SHELL OPTIONS ##
