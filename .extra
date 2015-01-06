@@ -53,7 +53,7 @@ if [[ $(type -t diff) == "function" ]] ;
    eval "c$(declare -f diff)"
    # and restore the original file command:
    unset diff
-}
+fi
 
 # `e` with no arguments opens the current directory in emacsclient, otherwise opens the
 # given location
