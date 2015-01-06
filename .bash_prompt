@@ -90,15 +90,10 @@ prompt_git() {
 	fi;
 }
 
-# If inside emacs, set a very simple prompt and exit:
-if [[ "${INSIDE_EMACS}" ]] ; then
-  PS1=": \u at \h in \w ;\n"
-  PS1+="$ "
-  return
-fi
 
 if tput setaf 1 &> /dev/null; then
-	tput sgr0; # reset colors
+    # if we always reset the terminal anyway, why reset it here?
+    #	tput sgr0; # reset colors
 	bold=$(tput bold);
 	reset=$(tput sgr0);
 	# Solarized colors, taken from http://git.io/solarized-colors.
@@ -112,6 +107,14 @@ if tput setaf 1 &> /dev/null; then
 	violet=$(tput setaf 61);
 	white=$(tput setaf 15);
 	yellow=$(tput setaf 136);
+
+        # If within an emacs *shell*, use term entries we know it understands:
+        if [[ "${INSIDE_EMACS}" ]] ; then
+	   echo "setting colors for *emacs*";
+	   reset="${black}";
+	   reset="\e[0m";
+        fi
+        
 else
 	bold='';
 	reset="\e[0m";
@@ -141,8 +144,12 @@ else
 	hostStyle="${yellow}";
 fi;
 
-# Set the terminal title to the current working directory.
-PS1="\[\033]0;\w\007\]";
+# Unless emacs, set the terminal title to the current working directory.
+if [[ -z ${INSIDE_EMACS} ]] ; then
+  PS1="\[\033]0;\w\007\]";
+else
+  PS1="";
+fi
 PS1+="\[${bold}\]\n"; # newline
 PS1+=": \[${userStyle}\]\u"; # username
 PS1+="\[${black}\] at ";
