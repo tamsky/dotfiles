@@ -163,3 +163,5 @@ export PS1;
 
 PS2="\[${yellow}\]→ \[${reset}\]";
 export PS2;
+
+[[ $DEBUG ]] && set +x;
