@@ -6,7 +6,7 @@ export HISTSIZE=32768;
 export HISTFILESIZE=$HISTSIZE;
 export HISTCONTROL=ignoredups;
 # Make some commands not show up in history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help:history";
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:history";
 
 # Prefer US English and use UTF-8
 export LANG="en_US.UTF-8";
@@ -19,8 +19,21 @@ export LESS_TERMCAP_md="${yellow}";
 export MANPAGER="less -X";
 
 # For that matter, don't ever clear the screen
-export LESS=-X
-
+export LESS="-X";
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto";
+
+# Homebrew stuff
+# 
+# Dedup without changing order:
+function dedup_lines () {
+  local -A line;
+  for i in "${@}" ; do
+    [[ ${line[${i}]} ]] && continue;
+    echo ${i}
+    line[${i}]=1;
+  done;
+}
+export PATH="$PATH:/usr/local/bin:/usr/local/sbin";
+export PATH=$(echo $(dedup_lines $(echo $PATH|tr : '\n')) | tr ' ' ':')
