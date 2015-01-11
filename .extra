@@ -93,6 +93,15 @@ set -o notify
 # was: no_exit_on_failed_exec=
 shopt -s execfail
 
+#######################
+## TERMINAL SETTINGS ##
+#######################
+# typical OSX fixups:
+stty erase '' \
+     eol2 undef  \
+     discard undef \
+     dsusp undef \
+     status undef
 
 #############
 ## HISTORY ##
@@ -167,6 +176,7 @@ alias restoreconsole="consolechars -f /usr/lib/kbd/consolefonts/lat0-sun16.psf.g
 alias sf="defaults write com.apple.Finder AppleShowAllFiles true; killall Finder"
 alias hf="defaults write com.apple.Finder AppleShowAllFiles false; killall Finder"
 
+alias sc='screen '
 
 ###############
 ## SSH-AGENT ##
@@ -210,3 +220,8 @@ fi
 if [[ -f "$HOME/.${FQDNHOSTNAME}/bash_profile" ]] ; then
     . "$HOME/.${FQDNHOSTNAME}/bash_profile"
 fi
+
+
+
+# BREW additons
+source $(brew --prefix nvm)/nvm.sh
