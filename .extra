@@ -111,9 +111,13 @@ stty erase '' \
 # http://unix.stackexchange.com/a/18443
 HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -w; history -c; history -r; ${PROMPT_COMMAND}"
+# PROMPT_COMMAND="history -n; history -w; history -c; history -r; ${PROMPT_COMMAND}"
+# End bash history sharing.
+
 # Make more commands not show up in history
-HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help:history:shutdown:reboot:telinit:init";
+# after trial, rejected ignore terms:
+#  * --help
+HISTIGNORE="ls:cd:cd -:pwd:exit:date:history:shutdown:reboot:telinit:init:exit";
 
 
 #############
