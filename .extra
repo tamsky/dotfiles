@@ -9,6 +9,19 @@
 ##############
 ## FUNCTIONS #
 ##############
+
+function dotfiles() {
+    cd ~/src/github/dotfiles
+}
+
+function mykey() {
+    cat ~/.ssh/id_dsa.pub
+}
+
+function addmykeyto() {
+    mykey | ssh $@ 'cat >> ~/.ssh/authorized_keys'
+}
+
 # http://stackoverflow.com/a/3951175
 function is_num() {
   local string=$1
@@ -117,7 +130,7 @@ shopt -s histappend
 # Make more commands not show up in history
 # after trial, rejected ignore terms:
 #  * --help
-HISTIGNORE="ls:cd:cd -:pwd:exit:date:history:shutdown:reboot:telinit:init:exit";
+HISTIGNORE="ls:cd:cd -:pwd:exit:date:history:shutdown:reboot:telinit:init:exit:afk";
 
 
 #############
@@ -146,6 +159,7 @@ export I_WANT_A_BROKEN_PS=true
 # aliases for all machines
 alias nw='emacs -nw '
 alias em='emacs '
+alias ec='emacsclient '
 alias ns='nslookup '
 alias purge='/bin/rm -f *~ .*~ #*'
 alias po='popd'
