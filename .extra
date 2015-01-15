@@ -224,6 +224,9 @@ if type _hg &> /dev/null && [ -f /usr/local/etc/bash_completion.d/hg-completion.
     complete -o default -o nospace -F _hg h;
 fi;
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
 
 ####################
 ## PER-HOST FILES ##
