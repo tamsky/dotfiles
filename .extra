@@ -159,7 +159,7 @@ export I_WANT_A_BROKEN_PS=true
 # aliases for all machines
 alias nw='emacs -nw '
 alias em='emacs '
-alias ec='emacsclient '
+function ec () { screen -X select 0 ; emacsclient $@ ; screen -X select $WINDOW; }
 alias ns='nslookup '
 alias purge='/bin/rm -f *~ .*~ #*'
 alias po='popd'
