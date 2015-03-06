@@ -157,7 +157,7 @@ export I_WANT_A_BROKEN_PS=true
 #  $HISTCMD should give this, but it's unavailable in functions?
 # 
 # eval $(hostname) once per shell:
-  SHORT_HOSTNAME=$(hostname -s)
+#  SHORT_HOSTNAME=$(hostname -s)
 #
 # history_logger() continued:
 #
@@ -170,7 +170,7 @@ function history_logger() {
     # only log if history number changes:
     if [[ ${last_history_line} =~ ${_match_me} ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
       _last_history_number_logged=${BASH_REMATCH[1]} ;
-      echo "$(date)] ${SHORT_HOSTNAME}[$$:S${WINDOW}:${last_exit_code}] $PWD ${last_history_line}" >> ~/.shell.log;
+      echo "$(date)] ${HOSTNAME%%.*}[$$:S${WINDOW}:${last_exit_code}] $PWD ${last_history_line}" >> ~/.shell.log;
     fi ;
   fi
 }
