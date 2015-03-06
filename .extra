@@ -120,12 +120,15 @@ stty erase '' \
 ## HISTORY ##
 #############
 
-# Share bash history across terms.
-# http://unix.stackexchange.com/a/18443
-HISTCONTROL=ignoredups:erasedups
+# DEPRECATED Share bash history across terms.
+# DEPRECATED http://unix.stackexchange.com/a/18443
+# HISTCONTROL=ignoredups:erasedups
+
+# retain all history so shell.log is more useful
+HISTCONTROL=
 shopt -s histappend
-# PROMPT_COMMAND="history -n; history -w; history -c; history -r; ${PROMPT_COMMAND}"
-# End bash history sharing.
+# DEPRECATED PROMPT_COMMAND="history -n; history -w; history -c; history -r; ${PROMPT_COMMAND}"
+# DEPRECATED End bash history sharing.
 
 # Make more commands not show up in history
 # after trial, rejected ignore terms:
@@ -170,7 +173,7 @@ function history_logger() {
     # only log if history number changes:
     if [[ ${last_history_line} =~ ${_match_me} ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
       _last_history_number_logged=${BASH_REMATCH[1]} ;
-      echo "$(date)] ${HOSTNAME%%.*}[$$:S${WINDOW}:${last_exit_code}] $PWD ${last_history_line}" >> ~/.shell.log;
+      echo "$(date)] ${HOSTNAME%%.*}[$$:S${WINDOW}:${last_exit_code}] ${PWD/$HOME/~/} ${last_history_line}" >> ~/.shell.log;
     fi ;
   fi
 }
