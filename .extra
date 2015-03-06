@@ -151,6 +151,20 @@ export FQDNHOSTNAME=$(uname -n)
 
 export I_WANT_A_BROKEN_PS=true
 
+export PROMPT_COMMAND='
+  if [ "$(id -u)" -ne 0 ]; then
+    _match_me="^ ?([0-9]+)"
+    if [[ $(history 1) =~ $_match_me ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
+      _last_history_number_logged=${BASH_REMATCH[1]} ;
+      echo "$(date)] XX_SHORT_HOSTNAME_XX[$$:S${WINDOW}] $PWD $(history 1)" >> ~/.shell.log;
+    fi ;
+  fi'
+# Substitute our short hostname with the actual value.
+# (So we are not exec'ing "hostname" every time PROMPT_COMMAND runs.)
+# If your hostname changes, and you want that reflected here...
+#   feel free to remove
+PROMPT_COMMAND=${PROMPT_COMMAND/XX_SHORT_HOSTNAME_XX/$(hostname -s)/}
+
 
 #############
 ## ALIASES ##
