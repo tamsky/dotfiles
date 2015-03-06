@@ -151,16 +151,32 @@ export FQDNHOSTNAME=$(uname -n)
 
 export I_WANT_A_BROKEN_PS=true
 
-# tromps variable 'last_exit_code', perhaps use a function for all this:
-export PROMPT_COMMAND='
-  last_exit_code=$?
+
+# history_logger() side effects:
+#  sets global variable '_last_history_number_logged'
+#  $HISTCMD should give this, but it's unavailable in functions?
+# 
+# eval $(hostname) once per shell:
+  SHORT_HOSTNAME=$(hostname -s)
+#
+# history_logger() continued:
+#
+function history_logger() {
+  local last_exit_code=$?   # must be the first command we run in this function
+  local last_history_line=$(history 1)
+  local _match_me="^ ?([0-9]+)"
+  # Only log if we are not root:
   if [ "$(id -u)" -ne 0 ]; then
-    _match_me="^ ?([0-9]+)"
-    if [[ $(history 1) =~ $_match_me ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
+    # only log if history number changes:
+    if [[ ${last_history_line} =~ ${_match_me} ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
       _last_history_number_logged=${BASH_REMATCH[1]} ;
-      echo "$(date)] '$(hostname -s)'[$$:S${WINDOW}] $PWD ec=${last_exit_code} $(history 1)" >> ~/.shell.log;
+      echo "$(date)] ${SHORT_HOSTNAME}[$$:S${WINDOW}:${last_exit_code}] $PWD ${last_history_line}" >> ~/.shell.log;
     fi ;
-  fi'
+  fi
+}
+
+# the plumbing that makes it work:
+export PROMPT_COMMAND='history_logger'
 
 
 #############
