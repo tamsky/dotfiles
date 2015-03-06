@@ -160,6 +160,7 @@ export I_WANT_A_BROKEN_PS=true
 alias nw='emacs -nw '
 alias em='emacs '
 function ec () { screen -X select 0 ; emacsclient $@ ; screen -X select $WINDOW; }
+function ec () { emacsclient -c $@ ; }
 alias ns='nslookup '
 alias purge='/bin/rm -f *~ .*~ #*'
 alias po='popd'
@@ -246,3 +247,10 @@ fi
 
 # BREW additons
 source $(brew --prefix nvm)/nvm.sh
+# BREW installed 'brew cask install google-cloud-sdk'
+source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
+source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc'
+
+
+# Things not in public VC:
+source ~/.extra_secrets
