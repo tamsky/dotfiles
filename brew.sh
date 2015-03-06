@@ -43,8 +43,15 @@ brew install narwhal
 # Install more recent versions of some OS X tools.
 brew install vim --override-system-vi
 brew install homebrew/dupes/grep
+brew install homebrew/dupes/openssh
 brew install homebrew/dupes/screen
 brew install homebrew/php/php55 --with-gmp
+
+# Install font tools.
+brew tap bramstein/webfonttools
+brew install sfnt2woff
+brew install sfnt2woff-zopfli
+brew install woff2
 
 # Install some CTF tools; see https://github.com/ctfs/write-ups.
 brew install bfg
@@ -90,6 +97,9 @@ brew install zopfli
 # Install Node.js. Note: this installs `npm` too, using the recommended
 # installation method.
 brew install node
+
+# Install io.js
+brew install iojs
 
 # Remove outdated versions from the cellar.
 brew cleanup
