@@ -173,7 +173,7 @@ function history_logger() {
     # only log if history number changes:
     if [[ ${last_history_line} =~ ${_match_me} ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
       _last_history_number_logged=${BASH_REMATCH[1]} ;
-      echo "$(date)] ${HOSTNAME%%.*}[$$:S${WINDOW}:${last_exit_code}] ${PWD/$HOME/~/} ${last_history_line}" >> ~/.shell.log;
+      echo "$(date)] ${HOSTNAME%%.*}[$$:S${WINDOW}:${last_exit_code}] ${PWD/~/\~} ${last_history_line}" >> ~/.shell.log;
     fi ;
   fi
 }
