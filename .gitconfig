@@ -27,6 +27,7 @@
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
+	heads = show-ref --heads
 	remotes = remote -v
 
 	# Amend the currently staged files to the latest commit
@@ -37,9 +38,6 @@
 
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
-
-	# Remove the old tag with this name and tag the latest commit with it.
-	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
 
 	# Find branches containing commit
 	fb = "!f() { git branch -a --contains $1; }; f"
@@ -164,3 +162,12 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
+
+# keep this stuff in .gitconfig.user
+#[user]
+#	name = Full Name
+#	email = user@example.com
+
+[include]
+        path = .gitconfig.user
