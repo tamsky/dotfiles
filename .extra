@@ -190,7 +190,7 @@ export PROMPT_COMMAND='history_logger'
 alias nw='emacs -nw '
 alias em='emacs '
 function ec () { screen -X select 0 ; emacsclient $@ ; screen -X select $WINDOW; }
-function ec () { emacsclient -c $@ ; }
+function ec () { emacsclient -c "$@" ; }
 alias ns='nslookup '
 alias purge='/bin/rm -f *~ .*~ #*'
 alias po='popd'
