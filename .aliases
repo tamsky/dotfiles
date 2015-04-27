@@ -49,6 +49,7 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 
 # IP addresses
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+# http://serverfault.com/questions/89114/finding-the-public-ip-address-in-a-shell-script
 alias gmyip="dig @ns1.google.com -t txt o-o.myaddr.l.google.com +short | tr -d\""
 alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
