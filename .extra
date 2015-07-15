@@ -282,3 +282,7 @@ complete -C aws_completer aws
 
 # Things not in public VC:
 source ~/.extra_secrets
+
+# because we run after exports, we need to cleanup PATH again here:
+# Cleanup
+export PATH=$( printf "$PATH" | tr : '\n' | dedup_input | tr '\n' : )
