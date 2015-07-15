@@ -156,13 +156,9 @@ export I_WANT_A_BROKEN_PS=true
 
 
 # history_logger() side effects:
-#  sets global variable '_last_history_number_logged'
-#  $HISTCMD should give this, but it's unavailable in functions?
-# 
-# eval $(hostname) once per shell:
-#  SHORT_HOSTNAME=$(hostname -s)
-#
-# history_logger() continued:
+#   sets global variable '_last_history_number_logged'
+#     $HISTCMD special variable should actually provide this,
+#     But it appears unavailable in functions or at PROMPT_COMMAND eval time.
 #
 function history_logger() {
   local last_exit_code=$?   # must be the first command we run in this function
@@ -190,7 +186,7 @@ export PROMPT_COMMAND='history_logger'
 alias nw='emacs -nw '
 alias em='emacs '
 function ec () { screen -X select 0 ; emacsclient $@ ; screen -X select $WINDOW; }
-function ec () { emacsclient -c "$@" ; }
+function ec () { emacsclient -c $@ ; }
 alias ns='nslookup '
 alias purge='/bin/rm -f *~ .*~ #*'
 alias po='popd'
@@ -280,6 +276,8 @@ source $(brew --prefix nvm)/nvm.sh
 # BREW installed 'brew cask install google-cloud-sdk'
 source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
 source '/opt/homebrew-cask/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc'
+# BREW awscli
+complete -C aws_completer aws
 
 
 # Things not in public VC:
