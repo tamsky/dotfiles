@@ -24,16 +24,15 @@ export LESS="-X";
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto";
 
+# Function to skip duplicate non-empty input lines (without changing line order)
+function dedup_input () {
+  # if line ($0) exists as a key in associative array l[$0], then we've seen it, so skip print.
+  awk '/./ { if (l[$0]) next; else { l[$0]=1 ; print $0 } }'
+}
+
 # Homebrew stuff
 # 
-# Dedup without changing order:
-function dedup_lines () {
-  local -A line;
-  for i in "${@}" ; do
-    [[ ${line[${i}]} ]] && continue;
-    echo ${i}
-    line[${i}]=1;
-  done;
-}
 export PATH="$PATH:/usr/local/bin:/usr/local/sbin";
-export PATH=$(echo $(dedup_lines $(echo $PATH|tr : '\n')) | tr ' ' ':')
+
+# Cleanup
+export PATH=$( printf "$PATH" | tr : '\n' | dedup_input | tr '\n' : )
