@@ -78,6 +78,32 @@ function e() {
     fi;
 }
 
+function killmux() {
+   ( cd ~/.ansible/cp/ ;
+      for i in * ; do
+                   i=${i##ansible-ssh-}
+          local USER=${i##*-}
+          local REST=${i%%-$USER}
+          local PORT=${REST##*-}
+                REST=${REST%%-$PORT}
+          local REMOTE=${REST}
+          echo closing host: ${USER}@${REMOTE}:${PORT}
+          set -x
+          command ssh -l ${USER}  -o "ControlPath ${PWD}/ansible-ssh-${REMOTE}-${PORT}-${USER}" ${REMOTE} -p ${PORT} -O exit
+          set +x
+      done
+   )
+   ( cd ~/.ssh/connections/ ;
+      for i in * ; do
+        local PORT=${i##*_}
+        local USER=${i%%_*}
+        local UR=${i%%_$PORT}
+        local REMOTE=${UR##$USER$'_'}
+        echo closing host: ${USER}@${REMOTE}:${PORT}
+        command ssh ${USER}@${REMOTE} -p ${PORT} -O exit
+      done
+   );
+}
 
 ###################
 ## SHELL OPTIONS ##
