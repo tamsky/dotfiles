@@ -87,10 +87,8 @@ function killmux() {
           local PORT=${REST##*-}
                 REST=${REST%%-$PORT}
           local REMOTE=${REST}
-          echo closing host: ${USER}@${REMOTE}:${PORT}
-          set -x
+          echo -n ${USER}@${REMOTE}:${PORT}
           command ssh -l ${USER}  -o "ControlPath ${PWD}/ansible-ssh-${REMOTE}-${PORT}-${USER}" ${REMOTE} -p ${PORT} -O exit
-          set +x
       done
    )
    ( cd ~/.ssh/connections/ ;
@@ -99,7 +97,7 @@ function killmux() {
         local USER=${i%%_*}
         local UR=${i%%_$PORT}
         local REMOTE=${UR##$USER$'_'}
-        echo closing host: ${USER}@${REMOTE}:${PORT}
+        echo -n ${USER}@${REMOTE}:${PORT}
         command ssh ${USER}@${REMOTE} -p ${PORT} -O exit
       done
    );

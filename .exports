@@ -32,7 +32,16 @@ function dedup_input () {
 
 # Homebrew stuff
 # 
-export PATH="$PATH:/usr/local/bin:/usr/local/sbin";
+export PATH="$PATH:/usr/local/bin:/usr/local/sbin"
 
-# Cleanup
+# AWS inventory cache is a reasonable hostfile
+export HOSTFILE=~/.bottlenose_hosts
+
+# GOLANG
+export GOPATH=~/src/go
+export GOROOT=/usr/local/opt/go
+
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+# final cleanup
 export PATH=$( printf "$PATH" | tr : '\n' | dedup_input | tr '\n' : )

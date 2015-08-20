@@ -18,9 +18,9 @@ FILES := \
 # 	echo
 
 diff-home: $(FILES)
-	for i in $^ ; do \
+	@ for i in $^ ; do \
 	    diff -u ~/$$(basename $$i) $$i ; \
-        done
+        done ; true
 
 diff-repo: $(FILES)
 	for i in $^ ; do \
