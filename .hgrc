@@ -35,6 +35,6 @@ clean = purge --print
 clean-for-realsies = purge
 
 browse = shelve --list --stat
-shelve = shelve --patch
+shelf-detail = shelve --patch
 visit = unshelve --keep
 read-scroll = unshelve
