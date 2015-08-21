@@ -12,6 +12,7 @@ fi;
 # args: $1 = non empty string denotes "debug on"
 prompt_git() {
 	local s='';
+	local shelved='';
 	local branchName='';
 	local hgstat_modified='';
 	local hgstat_added='';
@@ -31,17 +32,20 @@ prompt_git() {
 				/^\?/ {untracked+=1;}
 				END { 
 				      if (modified > 0)  { printf("M") };
-                                      if (added > 0)     { printf("A") };
+				      if (added > 0)	 { printf("A") };
 				      if (removed > 0)   { printf("R") };
 				      if (missing > 0)   { printf("!") };
 				      if (untracked > 0) { printf("?") };
-                                    }' )
+				    }' )
 
-	  [ -n "${s}" ] && s=" [${s}]";
+	[ -n "${s}" ] && s=" [${s}]";
 
-	  echo -e "${1}${branchName}${blue}${s}";
-	  [[ $DEBUG ]] && set +x;
-	  return;
+	IFS=$'\n' shelved=( $(hg shelve --list ) )
+	[ ${#shelved[@]} -gt 0 ] && shelved=" [ shelf: ${#shelved[@]} ]" || shelved='';
+
+	echo -e "${1}${branchName}${blue}${s}${yellow}${shelved}";
+	[[ $DEBUG ]] && set +x;
+	return;
 	
 
 	# Check if the current directory is in a Git repository.
