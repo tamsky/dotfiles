@@ -7,6 +7,7 @@ FILES := \
 	.exports            \
 	.extra              \
 	.gitconfig          \
+	.hgrc               \
 	.inputrc            \
 	.osx                \
 

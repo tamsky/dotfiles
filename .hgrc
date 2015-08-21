@@ -1,0 +1,40 @@
+[extensions]
+hgext.bookmarks =
+hggit =
+strip =
+hgext.convert =
+graphlog =
+shelve =
+# careful now:
+# purge =
+
+[ui]
+merge = emacs
+
+[merge-tools]
+emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"
+
+[alias]
+bm = bookmark
+
+# from https://bitbucket.org/twic/devtools/src/3c3c9081c4b1ad7a4631ea0dce0442d4ce95ca94/hg/hgrc?at=default
+lg = log --template '{rev}:{node|short} {date|isodate} {desc|strip|firstline} -- {author|person}\n'
+
+# from http://jamie-wong.com/2012/07/11/my-mercurial-setup-and-workflow-at-khan-academy/
+lga = glog --style=$HOME/.hg-map-cmdline.lg
+
+
+unrevert = !F="$1"; F="${F%.orig}"; mv "$F.orig" "$F"
+nukebookmarks = !$HG bookmarks | tr -d '*' | tr -s ' ' | cut -d ' ' -f 2 | xargs $HG bookmark -d
+stripanonymous = !while [ "$(hg log -r 'head() and not bookmark()' | wc -l)" -ne 0 ]; do hg strip -r 'head() and not bookmark()'; done
+
+pullup = pull -u
+pu = pull -u
+
+clean = purge --print
+clean-for-realsies = purge
+
+browse = shelve --list --stat
+shelve = shelve --patch
+visit = unshelve --keep
+read-scroll = unshelve
