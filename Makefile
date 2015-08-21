@@ -17,18 +17,18 @@ FILES := \
 # $FILES:
 # 	echo
 
-diff-home: $(FILES)
+home-vs-repo: $(FILES)
 	@ for i in $^ ; do \
 	    diff -u ~/$$(basename $$i) $$i ; \
         done ; true
 
-diff-repo: $(FILES)
-	for i in $^ ; do \
+repo-vs-home: $(FILES)
+	@ for i in $^ ; do \
 	    diff -u $$i ~/$$(basename $$i) ; \
         done
 
 copy-home-to-repo: $(FILES)
-	for i in $^ ; do \
+	@ for i in $^ ; do \
 	  echo cp ~/$$(basename $$i) $$i ; \
 	done
 
@@ -36,3 +36,6 @@ copy-repo-to-home: $(FILES)
 	for i in $^ ; do \
 	  echo cp $$i ~/$$(basename $$i) ; \
 	done
+
+status:
+	hg status
