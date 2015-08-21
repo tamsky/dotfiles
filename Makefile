@@ -10,6 +10,7 @@ FILES := \
 	.hgrc               \
 	.inputrc            \
 	.osx                \
+	.Xresources         \
 
 # FILES end
 

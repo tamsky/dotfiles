@@ -1,0 +1,149 @@
+!
+!      XTERM RESOURCES
+!      <URL:http://www.in-ulm.de/~mascheck/X11/XTerm>
+
+! XTerm*font: -*-lucidatypewriter-medium-*-*-*-12-*-*-*-*-*-iso8859-*
+! XTerm*font1: -*-*-*-*-*-*-2-*-*-*-*-*-*-*
+! XTerm*font2: -misc-fixed-*-r-normal-*-8-*-*-*-*-*-iso8859-*
+! XTerm*font3: -b&h-lucidatypewriter-bold-*-*-*-12-*-*-*-*-*-*-*
+! XTerm*font4: -*-screen-bold-r-normal-*-16-*-*-*-*-*-iso8859-*
+! XTerm*font5: -*-lucidatypewriter-medium-*-*-*-18-*-*-*-*-*-*-*
+! XTerm*font6: -*-lucidatypewriter-medium-*-*-*-20-*-*-*-*-*-*-*
+! XTerm*font7: -dec-terminal-bold-r-normal-*-14-*-*-*-*-*-iso8859-*
+
+! possibly my attempts:
+! XTerm*font5: -*-courier-medium-r-normal-*-*-240-*-*-*-*-iso8859-1
+! XTerm*font6:-*-courier-medium-r-normal-*-34-*-*-*-*-*-iso8859-1
+! XTerm*font7: -*-*-*-r-*-*-34-*-*-*-*-*-*-*
+
+! these look better as truetype fonts:
+!XTerm*font6: -*-lucidatypewriter-medium-*-*-*-24-*-*-*-*-*-iso8859-1
+!XTerm*font7: -*-lucidatypewriter-medium-*-*-*-34-*-*-*-*-*-iso8859-1
+
+! renderFont controls whether trueType mode is enabled at startup, or manual.
+XTerm*renderFont: true
+
+! The following have an extra mark on the zero(0) glyph:
+
+! PT Mono (28x98) (has ->, 0 is slashed)
+! XTerm*faceName: PT Mono
+
+! Monaco (25x98)  (has -> glyph, 0 is slashed)
+! XTerm*faceName: Monaco
+
+! Andale Mono (28x98) (has -> glyph, 0 is dotted)
+! XTerm*faceName: Andale Mono
+
+! Menlo (27x98) (has -> glyph, 0 is slashed)
+! XTerm*faceName: Menlo
+
+! Inconsolata (30x116) (missing -> glyph, 0 is slashed)
+XTerm*faceName: Inconsolata
+
+! Monoid (23x88) (has ->, 0 is slashed)
+! XTerm*faceName: Monoid
+
+! Envy Code R (27x111) (has ->, 0 is slashed)
+! XTerm*faceName: Envy Code R
+
+! M+ 1m (29x121) (missing ->, 0 slashed)
+! XTerm*faceName: M+ 1m
+
+XTerm*faceSize1: 5
+XTerm*faceSize2: 10
+XTerm*faceSize3: 15
+XTerm*faceSize4: 20
+XTerm*faceSize5: 25
+XTerm*faceSize6: 30
+
+
+XTerm*loginShell:               true
+XTerm*cursorColor:              blue
+! blue => orange , magenta->green
+XTerm*metaSendsEscape:   true
+XTerm*eightBitInput:            false
+
+! http://www.tldp.org/HOWTO/Keyboard-and-Console-HOWTO-5.html
+! send delete(127) when using the <BackSpace> key
+XTerm.vt100.backarrowKey:       false
+XTerm.vt100.reverseVideo:       false
+!XTerm.vt100.foreground:         yellow
+!XTerm.vt100.background:         black
+XTerm.vt100.saveLines:          1023
+XTerm.vt100.scrollBar:          false
+XTerm.vt100.deleteIsDEL:        false
+XTerm.vt100.visualBell:         true
+XTerm.vt100.popOnBell:          true
+
+XTerm*charClass: \
+  33:48,36-38:48,43-47:48,58:48,61:48,63-64:48,126:48
+!  !    $ % &    +,-./    :     =     ? @      ~
+
+! If you are unable to use stty...
+!
+! XTerm*ttymodes: erase ^? kill ^U intr ^C quit ^\ eof ^D \
+!                susp ^Z start ^Q stop ^S eol undef eol2 undef
+
+XTerm*VT100.Translations: #override \
+~Shift <KeyPress> Help: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+Shift <KeyPress> Help: insert-selection(PRIMARY, CLIPBOARD,CUT_BUFFER0) \n\
+~Ctrl ~Meta <Btn2Up>: insert-selection(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+ <BtnUp>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+Meta <Key> minus:           smaller-vt-font() \n\
+Meta <Key> KP_Subtract:     smaller-vt-font() \n\
+Meta <Key> plus:            larger-vt-font() \n\
+Meta <Key> KP_Add:          larger-vt-font() \n
+
+!select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+
+!
+!<Btn2Down>: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+!<KeyPress> Help: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+!Shift <KeyPress> Help: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+!
+
+
+
+! default bindings in XTerm-131
+! to get an idea:
+!
+!	   Shift <KeyPress> Prior:scroll-back(1,halfpage) \n\
+!	    Shift <KeyPress> Next:scroll-forw(1,halfpage) \n\
+!	  Shift <KeyPress> Select:select-cursor-start() \
+!				  select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
+!	  Shift <KeyPress> Insert:insert-selection(PRIMARY, CUT_BUFFER0) \n\
+!
+!		    ~Meta <KeyPress>:insert-seven-bit() \n\
+!		     Meta <KeyPress>:insert-eight-bit() \n\
+!		    !Ctrl <Btn1Down>:popup-menu(mainMenu) \n\
+!	       !Lock Ctrl <Btn1Down>:popup-menu(mainMenu) \n\
+!    !Lock Ctrl @Num_Lock <Btn1Down>:popup-menu(mainMenu) \n\
+! 	 ! @Num_Lock Ctrl <Btn1Down>:popup-menu(mainMenu) \n\
+!		    ~Meta <Btn1Down>:select-start() \n\
+!		  ~Meta <Btn1Motion>:select-extend() \n\
+!		    !Ctrl <Btn2Down>:popup-menu(vtMenu) \n\
+!	       !Lock Ctrl <Btn2Down>:popup-menu(vtMenu) \n\
+!    !Lock Ctrl @Num_Lock <Btn2Down>:popup-menu(vtMenu) \n\
+!	 ! @Num_Lock Ctrl <Btn2Down>:popup-menu(vtMenu) \n\
+!	      ~Ctrl ~Meta <Btn2Down>:ignore() \n\
+!		     Meta <Btn2Down>:clear-saved-lines() \n\
+!		~Ctrl ~Meta <Btn2Up>:insert-selection(PRIMARY, CUT_BUFFER0) \n\
+!		    !Ctrl <Btn3Down>:popup-menu(fontMenu) \n\
+!	       !Lock Ctrl <Btn3Down>:popup-menu(fontMenu) \n\
+!    !Lock Ctrl @Num_Lock <Btn3Down>:popup-menu(fontMenu) \n\
+!	 ! @Num_Lock Ctrl <Btn3Down>:popup-menu(fontMenu) \n\
+!	      ~Ctrl ~Meta <Btn3Down>:start-extend() \n\
+!		  ~Meta <Btn3Motion>:select-extend() \n\
+!		     Ctrl <Btn4Down>:scroll-back(1,halfpage,m) \n\
+!		Lock Ctrl <Btn4Down>:scroll-back(1,halfpage,m) \n\
+!     Lock @Num_Lock Ctrl <Btn4Down>:scroll-back(1,halfpage,m) \n\
+!	   @Num_Lock Ctrl <Btn4Down>:scroll-back(1,halfpage,m) \n\
+!			  <Btn4Down>:scroll-back(5,line,m)     \n\
+!		     Ctrl <Btn5Down>:scroll-forw(1,halfpage,m) \n\
+!		Lock Ctrl <Btn5Down>:scroll-forw(1,halfpage,m) \n\
+!     Lock @Num_Lock Ctrl <Btn5Down>:scroll-forw(1,halfpage,m) \n\
+!	   @Num_Lock Ctrl <Btn5Down>:scroll-forw(1,halfpage,m) \n\
+!			  <Btn5Down>:scroll-forw(5,line,m)     \n\
+!			     <BtnUp>:select-end(PRIMARY, CUT_BUFFER0) \n\
+!			   <BtnDown>:bell(0)
+!------------------------------------------------------------
