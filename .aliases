@@ -149,6 +149,8 @@ alias use-node="brew unlink iojs && brew link --force node"
 
 ## SSH
 function newssh () {
-  ssh -O exit "$@" ;
+  # don't run 'ssh' alias:
+  command ssh -O exit "$@" ;
+  # possible 'ssh' alias:
   ssh "$@"
 }
