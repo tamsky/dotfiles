@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [extensions]
 hgext.bookmarks =
 hggit =
@@ -10,6 +12,7 @@ shelve =
 
 [ui]
 merge = emacs
+username = Marc Tamsky <tamsky@users.noreply.github.com>
 
 [merge-tools]
 emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"
@@ -35,6 +38,6 @@ clean = purge --print
 clean-for-realsies = purge
 
 browse = shelve --list --stat
-shelf-detail = shelve --patch
+shelve-detail = shelve --patch
 visit = unshelve --keep
 read-scroll = unshelve
