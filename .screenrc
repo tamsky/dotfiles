@@ -1,5 +1,7 @@
 # panacea .screenrc file (proudly serving since 1991)
 
+# brew install homebrew/dupes/screen to install 4.4.0
+
 # Disable the startup message
 startup_message off
 
