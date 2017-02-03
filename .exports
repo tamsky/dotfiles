@@ -33,6 +33,10 @@ function dedup_input () {
 # Homebrew stuff
 # 
 export PATH="$PATH:/usr/local/bin:/usr/local/sbin"
+[[ -d $HOME/.linuxbrew/bin ]] &&
+  PATH="$HOME/.linuxbrew/bin:$PATH"
+
+
 
 # AWS inventory cache is a reasonable hostfile
 export HOSTFILE=~/.bottlenose_hosts
