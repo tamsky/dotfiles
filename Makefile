@@ -43,7 +43,7 @@ copy-home-to-repo: $(FILES)
 
 copy-repo-to-home: $(FILES)
 	for i in $^ ; do \
-	  echo cp $$i ~/$$(basename $$i) ; \
+	  cp -v $$i ~/$$(basename $$i) ; \
 	done
 
 status:
