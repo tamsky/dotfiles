@@ -6,10 +6,17 @@ FILES := \
 	.curlrc             \
 	.exports            \
 	.extra              \
+	.functions          \
 	.gitconfig          \
+	.hgignore           \
 	.hgrc               \
+	.hg-map-cmdline.lg  \
 	.inputrc            \
 	.osx                \
+	.screenrc           \
+	.screenrc-hardstatus1 \
+	.screenrc-hardstatus2 \
+	.wgetrc             \
 	.Xresources         \
 
 # FILES end
