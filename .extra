@@ -187,7 +187,7 @@ export I_WANT_A_BROKEN_PS=true
 function history_logger() {
   local last_exit_code=$?   # must be the first command we run in this function
   local last_history_line=$(history 1)
-  local _match_me="^ ?([0-9]+)"
+  local _match_me="^ +([0-9]+)"
   # Only log if we are not root:
   if [ "$(id -u)" -ne 0 ]; then
     # only log if history number changes:
@@ -275,6 +275,7 @@ if type _hg &> /dev/null && [ -f /usr/local/etc/bash_completion.d/hg-completion.
     complete -o default -o nospace -F _hg h;
 fi;
 
+[[ $(type -p brew) ]] &&
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
