@@ -106,6 +106,22 @@ set prefer-visible-bell on
 # Use Alt/Meta + Delete to delete the preceding word
 "\e[3;3~": kill-word
 
+"\e[1;3D": backward-word
+"\e[1;3C": forward-word
+#"\e[1;3B": history-forward
+#"\e[1;3A": history-back
+
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+#"\e[1;5B": history-forward
+#"\e[1;5A": history-back
+
+"\e[1;9D": backward-word
+"\e[1;9C": forward-word
+#"\e[1;9B": history-forward
+#"\e[1;9A": history-back
+
+
 
 # Sources:
 #   http://www.gnu.org/software/bash/manual/html_node/Sample-Init-File.html#Sample-Init-File
