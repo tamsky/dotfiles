@@ -187,7 +187,7 @@ export I_WANT_A_BROKEN_PS=true
 function history_logger() {
   local last_exit_code=$?   # must be the first command we run in this function
   local last_history_line=$(history 1)
-  local _match_me="^ +([0-9]+)"
+  local _match_me="^ *([0-9]+)"
   # Only log if we are not root:
   if [ "$(id -u)" -ne 0 ]; then
     # only log if history number changes:
@@ -301,8 +301,7 @@ fi
 # # BREW installed 'brew cask install google-cloud-sdk'
 # source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
 # source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc'
-
-# BREW awscli
+# # BREW awscli
 complete -C aws_completer aws
 
 
