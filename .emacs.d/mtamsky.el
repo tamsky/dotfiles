@@ -9,6 +9,18 @@
 (global-set-key "\C-\\" 'help-command)
 (global-set-key "\C-x^" 'enlarge-window)
 
+(setq text-quoting-style 'straight)
+
+;; If we ever need it
+;; via: https://ghc.haskell.org/trac/ghc/ticket/2507#comment:27
+;;
+;; (setq locale-coding-system 'utf-8)
+;; (set-terminal-coding-system 'utf-8-unix)
+;; (set-keyboard-coding-system 'utf-8)
+;; (set-selection-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
+
+
 ;; when SCREEN set && not emacs-client
 ;; (global-set-key "\C-x\C-c
 
@@ -90,3 +102,6 @@
 
 ;; Mostly to keep auto-fill off in yaml mode.
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
+
+;; waka
+(use-package wakatime-mode)
