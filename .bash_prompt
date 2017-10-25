@@ -44,6 +44,14 @@ prompt_git() {
 	[ ${#shelved[@]} -gt 0 ] && shelved=" [ shelf: ${#shelved[@]} ]" || shelved='';
 
 	echo -e "${1}${branchName}${blue}${s}${yellow}${shelved}";
+
+        # local project=$(basename $(hg root))
+        # local entity=$(basename $PWD)
+        # entity=${entity// } # space
+        # entity=${entity//	} # tab
+        # [[ -z "${entity}" ]] && return # $entity is empty or only whitespace
+        # type wakatime 2>&1 >/dev/null &&
+        #   (nohup wakatime --write --plugin "bash-wakaprime/0.1" --entity-type app --project "$project" --entity "$entity" 2>&1 > /dev/null)
 	[[ $DEBUG ]] && set +x;
 	return;
 	
