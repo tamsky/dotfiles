@@ -12,39 +12,51 @@ fi;
 # args: $1 = non empty string denotes "debug on"
 prompt_git() {
 	local s='';
-	local shelved='';
+	local -a shelved=();
 	local branchName='';
 	local hgstat_modified='';
 	local hgstat_added='';
 	local hgstat_removed='';
 	local hgstat_missing=''; #deleted by non-hg command, but tracked
 	local hgstat_untracked='';
+        local hg_mainreporoot=$(hg showconfig bundle.mainreporoot)
 
 	[[ $DEBUG ]] && set -x;
-	# It's possible 'hg id' gives everything we want in one shot, need to explore that.
-	branchName="$(hg id -B 2>/dev/null)"
-	if [ -n "${branchName}" ] ; then
-	  s=$(hg status 2>/dev/null | awk 'BEGIN {modified=added=removed=untracked=missing=0;}
-				/^M/  {modified+=1;}
-				/^A/  {added+=1;}
-				/^R/  {removed+=1;}
-				/^!/  {missing+=1;}
-				/^\?/ {untracked+=1;}
-				END { 
-				      if (modified > 0)  { printf("M") };
-				      if (added > 0)	 { printf("A") };
-				      if (removed > 0)   { printf("R") };
-				      if (missing > 0)   { printf("!") };
-				      if (untracked > 0) { printf("?") };
-				    }' )
+        # load our cache, if it exists
+#        [[ -f ${hg_mainreporoot}.prompt-cache ]] && source ${hg_mainreporoot}.prompt-cache
 
-	[ -n "${s}" ] && s=" [${s}]";
-
-	IFS=$'\n' shelved=( $(hg shelve --list ) )
-	[ ${#shelved[@]} -gt 0 ] && shelved=" [ shelf: ${#shelved[@]} ]" || shelved='';
-
-	echo -e "${1}${branchName}${blue}${s}${yellow}${shelved}";
-
+        echo -n ${1}
+        hg prompt "{bookmark}[{status|full}]" 2>/dev/null
+         
+#	# It's possible 'hg id' gives everything we want in one shot, need to explore that.
+#        [[ "${branchName}" ]] || branchName="$(hg id -B 2>/dev/null)"
+#	if [ -n "${branchName}" ] ; then
+#          [[ "${s}" ]] ||
+#	  s=$(hg status 2>/dev/null | awk 'BEGIN {modified=added=removed=untracked=missing=0;}
+#				/^M/  {modified+=1;}
+#				/^A/  {added+=1;}
+#				/^R/  {removed+=1;}
+#				/^!/  {missing+=1;}
+#				/^\?/ {untracked+=1;}
+#				END { 
+#				      if (modified > 0)  { printf("M") };
+#				      if (added > 0)	 { printf("A") };
+#				      if (removed > 0)   { printf("R") };
+#				      if (missing > 0)   { printf("!") };
+#				      if (untracked > 0) { printf("?") };
+#				    }' )
+#
+#	[ -n "${s}" ] && s=" [${s}]";
+#
+#        [[ "${shelved}" ]] || IFS=$'\n' shelved=( $(hg shelve --list ) )
+#	[ ${#shelved[@]} -gt 0 ] && shelved=" [ shelf: ${#shelved[@]} ]" || shelved='';
+#
+#	echo -e "${1}${branchName}${blue}${s}${yellow}${shelved}";
+#
+#        printf "s='"${s}"'\n" > $(hg showconfig bundle.mainreporoot).prompt-cache
+#        printf "branchName='"${branchName}"'\n" >> $(hg showconfig bundle.mainreporoot).prompt-cache
+#        printf "shelved='"${shelved}"'\n" >> $(hg showconfig bundle.mainreporoot).prompt-cache
+#        
         # local project=$(basename $(hg root))
         # local entity=$(basename $PWD)
         # entity=${entity// } # space
@@ -57,7 +69,7 @@ prompt_git() {
 	
 
 	# Check if the current directory is in a Git repository.
-	elif [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+	if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
 
 		# check if the current directory is in .git before running git checks
 		if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
@@ -163,7 +175,9 @@ else
   PS1="";
 fi
 PS1+="\[${bold}\]\n"; # newline
-PS1+=": \[${userStyle}\]\u"; # username
+PS1+=": "
+PS1+="\[${userStyle}\]"
+PS1+="\$([[ \${AWS_PROFILE} ]] && echo [\${AWS_PROFILE}] || echo \$USER)"
 PS1+="\[${black}\] at ";
 PS1+="\[${hostStyle}\]\h"; # host
 PS1+="\[${black}\] in ";
