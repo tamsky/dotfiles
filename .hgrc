@@ -2,17 +2,24 @@
 
 [extensions]
 hgext.bookmarks =
-hggit =
+hggit = ~/src/bitbucket/durin42/hg-git/hggit
 strip =
 hgext.convert =
 graphlog =
 shelve =
+# https://www.mercurial-scm.org/wiki/FsMonitorExtension
+fsmonitor =
+# https://bitbucket.org/sjl/hg-prompt/src/default/
+prompt = ~/src/bitbucket/sjl/hg-prompt/prompt.py
+
+
 # careful now:
 # purge =
 
 [ui]
 merge = emacs
 username = Marc Tamsky <tamsky@users.noreply.github.com>
+paginate = off
 
 [merge-tools]
 emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"
