@@ -37,8 +37,17 @@ XTerm*renderFont: true
 ! Menlo (27x98) (has -> glyph, 0 is slashed)
 ! XTerm*faceName: Menlo
 
+! ##########################
+! ### PREVIOUS FAVORITE: ###
+! ##########################
 ! Inconsolata (30x116) (missing -> glyph, 0 is slashed)
-XTerm*faceName: Inconsolata
+! XTerm*faceName: Inconsolata
+
+! ####################
+! ### TESTING NEW: ###
+! ####################
+! Pragmata Pro Mono (missing -> glyph, 0 is dotted)
+XTerm*faceName: Pragmata Pro Mono
 
 ! Monoid (23x88) (has ->, 0 is slashed)
 ! XTerm*faceName: Monoid
