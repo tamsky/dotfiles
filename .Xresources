@@ -22,6 +22,7 @@
 
 ! renderFont controls whether trueType mode is enabled at startup, or manual.
 XTerm*renderFont: true
+!XTerm*renderFont: false
 
 ! The following have an extra mark on the zero(0) glyph:
 
@@ -41,13 +42,13 @@ XTerm*renderFont: true
 ! ### PREVIOUS FAVORITE: ###
 ! ##########################
 ! Inconsolata (30x116) (missing -> glyph, 0 is slashed)
-! XTerm*faceName: Inconsolata
+!XTerm*faceName: Inconsolata
 
 ! ####################
 ! ### TESTING NEW: ###
 ! ####################
-! Pragmata Pro Mono (missing -> glyph, 0 is dotted)
 XTerm*faceName: Pragmata Pro Mono
+XTerm*scaleHeight: 1.01
 
 ! Monoid (23x88) (has ->, 0 is slashed)
 ! XTerm*faceName: Monoid
@@ -58,19 +59,23 @@ XTerm*faceName: Pragmata Pro Mono
 ! M+ 1m (29x121) (missing ->, 0 slashed)
 ! XTerm*faceName: M+ 1m
 
-XTerm*faceSize1: 5
-XTerm*faceSize2: 10
-XTerm*faceSize3: 15
-XTerm*faceSize4: 20
-XTerm*faceSize5: 25
-XTerm*faceSize6: 30
+XTerm*faceSize1: 6
+XTerm*faceSize2: 12
+XTerm*faceSize3: 14
+XTerm*faceSize4: 18
+XTerm*faceSize5: 24
+XTerm*faceSize6: 32
 
 
 XTerm*loginShell:               true
 XTerm*cursorColor:              blue
 ! blue => orange , magenta->green
 XTerm*metaSendsEscape:   true
-XTerm*eightBitInput:            false
+! with metaSendsEscape = true
+! eightBitInput=false causes xterm, at startup, to set 7-bit line discipline
+! XTerm*eightBitInput:            false
+! eightBitInput=true causes xterm, at startup, to set 8-bit line discipline
+XTerm*eightBitInput:            true
 
 ! http://www.tldp.org/HOWTO/Keyboard-and-Console-HOWTO-5.html
 ! send delete(127) when using the <BackSpace> key
