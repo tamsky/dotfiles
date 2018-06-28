@@ -39,7 +39,7 @@ export HOSTFILE=~/.bottlenose_hosts
 
 # GOLANG
 export GOPATH=~/src/go
-export GOROOT=/usr/local/Cellar/go/1.7.4_2/libexec
+export GOROOT=/usr/local/opt/go/libexec
 
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/libexec"
 
