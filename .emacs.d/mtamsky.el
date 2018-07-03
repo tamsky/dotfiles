@@ -105,3 +105,8 @@
 
 ;; waka
 (use-package wakatime-mode)
+
+;;TIP
+;; revert-buffer-with-coding-system
+;; try using 'iso-8859-1' when debugging utf-8 documents
+;;

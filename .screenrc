@@ -25,6 +25,7 @@ C-\ (^\ == \034)
 bind \034
 bind k
 bind K
+bind x   # lockscreen
 
 # use different keys to navigate split windows
 bind j focus down
