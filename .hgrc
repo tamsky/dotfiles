@@ -24,6 +24,9 @@ paginate = off
 [merge-tools]
 emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"
 
+[hooks]
+update.do_not_commit = $HOME/.hg-pre-update-hook.sh $HG_PARENT1 $HG_PARENT2
+
 [alias]
 bm = bookmark
 

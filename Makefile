@@ -11,6 +11,7 @@ FILES := \
 	.hgignore           \
 	.hgrc               \
 	.hg-map-cmdline.lg  \
+	.hg-pre-update-hook.sh  \
 	.inputrc            \
 	.osx                \
 	.screenrc           \
