@@ -38,7 +38,7 @@ lga = glog --style=$HOME/.hg-map-cmdline.lg
 
 
 unrevert = !F="$1"; F="${F%.orig}"; mv "$F.orig" "$F"
-nukebookmarks = !$HG bookmarks | tr -d '*' | tr -s ' ' | cut -d ' ' -f 2 | xargs $HG bookmark -d
+nukebookmarks = !$HG bookmarks | tr -d '*' | tr -s ' ' | cut -d ' ' -f 2 | sed "s/'/\\\'/g" | xargs $HG bookmark -d
 stripanonymous = !while [ "$(hg log -r 'head() and not bookmark()' | wc -l)" -ne 0 ]; do hg strip -r 'head() and not bookmark()'; done
 
 pullup = pull -u
