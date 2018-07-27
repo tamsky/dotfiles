@@ -19,14 +19,15 @@ prompt_git() {
 	local hgstat_removed='';
 	local hgstat_missing=''; #deleted by non-hg command, but tracked
 	local hgstat_untracked='';
-        local hg_mainreporoot=$(hg showconfig bundle.mainreporoot)
+#        local hg_mainreporoot=$(hg showconfig bundle.mainreporoot 2>/dev/null)
 
 	[[ $DEBUG ]] && set -x;
         # load our cache, if it exists
-#        [[ -f ${hg_mainreporoot}.prompt-cache ]] && source ${hg_mainreporoot}.prompt-cache
+        # [[ -f ${hg_mainreporoot}.prompt-cache ]] && source ${hg_mainreporoot}.prompt-cache
 
-        echo -n ${1}
-        hg prompt "{bookmark}[{status|full}]" 2>/dev/null
+        echo -n ${1} # debugging notice string?
+        
+#        echo -n $(hg prompt "{bookmark}" 2>/dev/null)
          
 #	# It's possible 'hg id' gives everything we want in one shot, need to explore that.
 #        [[ "${branchName}" ]] || branchName="$(hg id -B 2>/dev/null)"
@@ -65,7 +66,6 @@ prompt_git() {
         # type wakatime 2>&1 >/dev/null &&
         #   (nohup wakatime --write --plugin "bash-wakaprime/0.1" --entity-type app --project "$project" --entity "$entity" 2>&1 > /dev/null)
 	[[ $DEBUG ]] && set +x;
-	return;
 	
 
 	# Check if the current directory is in a Git repository.
@@ -170,7 +170,9 @@ fi;
 
 # Unless emacs, set the terminal title to the current working directory.
 if [[ -z ${INSIDE_EMACS} ]] ; then
-  PS1="\[\033]0;\w\007\]";
+# classic directory disabled in favor of background lazy update
+#  PS1="\[\033]0;\w\007\]";
+  PS1="";
 else
   PS1="";
 fi
@@ -182,7 +184,7 @@ PS1+="\[${black}\] at ";
 PS1+="\[${hostStyle}\]\h"; # host
 PS1+="\[${black}\] in ";
 PS1+="\[${green}\]\w"; # working directory
-PS1+="\$(prompt_git \"${black} on ${violet}\")"; # Git repository details
+#PS1+="\$(prompt_git \"${black} on ${violet}\")"; # Git repository details
 PS1+=";\n";
 PS1+="\[${black}\]# \[${reset}\]"; # `$` (and reset color)
 export PS1;
