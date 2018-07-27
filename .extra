@@ -275,6 +275,7 @@ if type _hg &> /dev/null && [ -f /usr/local/etc/bash_completion.d/hg-completion.
     complete -o default -o nospace -F _hg h;
 fi;
 
+# this "type -p" condition may not need to exist? (May:2018)
 [[ $(type -p brew) ]] &&
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
