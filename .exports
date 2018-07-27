@@ -45,3 +45,6 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/libexec"
 
 # final cleanup
 export PATH=$( printf "$PATH" | tr : '\n' | dedup_input | tr '\n' : )
+
+# AWS-VAULT, geodesic compatibility mode says we want the file backend
+export AWS_VAULT_BACKEND=file
