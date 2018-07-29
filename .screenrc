@@ -56,3 +56,9 @@ hardstatus string "%H: %-Lw%{+ Yk}%50>%n%f* %t:%h%{-}%+Lw%<"
 
 # use '#' to toggle hardstatus
 bind \043 source $HOME/.screenrc-hardstatus1
+
+
+# optional
+# backtick 0 1 1 date
+#                yellow host   whie window  fill right -> backtick
+caption always '%{= yd}%h%{-} %{= wd}%t%{-} %=%0`'
