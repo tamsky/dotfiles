@@ -1,2 +1,2 @@
-caption always
+caption always '%h%{=dbu Wm} %=%0`'
 bind \044 source $HOME/.screenrc-caption2

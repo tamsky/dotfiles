@@ -2,8 +2,14 @@
 
 # hardstatus text:
 
-declare -a STATUS=( $(hg prompt "[{status|full}]" 2>/dev/null)
+declare -a STATUS=( $(hg prompt "{status|full}" 2>/dev/null)
                   )
+[[ "${STATUS[0]}" ]] && [[ "${STATUS[0]}" != "?" ]] && {
+    STATUS_FLAGS+="{= Wb}"  # white on blue -> reverse mode -> blue on white -> inverted CLUT -> dim yellow on black
+    STATUS_FLAGS+=[${STATUS[0]}]
+    STATUS_FLAGS+="{-}"
+    STATUS_FLAGS+="{=dbu} {-}" # trailing space separates from BOOKMARK
+}
 
 #STATUS=$( echo $(echo -n $-) )
 
@@ -19,17 +25,21 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
                               # print warnings
                               if (NF>1) { multiple_bookmarks=1 ; printf "{! rc}MULTIPLE{-} BOOKMARKS " }
                               if (index($0,"*")==0) { no_default_bookmark=1 ; printf "{! rc}NO ACTIVE{-} BOOKMARK " }
-                              # gsub = put each bookmark in (parens)
-                              # printf = highlight bookmarks
                               switch (multiple_bookmarks + no_default_bookmark) {
-                                                   #________________# == highlight stop+space+restart
-                                 case 2 : gsub(" ","){-} {! rc}(",$0) ; printf "{! rc}%s{-}", $0 ; exit 0
+                                        # gsub = put each bookmark in (parens)
+                                                  # )
+                                                  # |  {highlight stop}
+                                                  # |  |  space
+                                                  # |  |  |  {highlight start}
+                                                  # |  |  |  |     (
+                                                  # |  |  |  |     |
+                                 case 2 : gsub(" ","){-} {! rc}(",$0) ; printf "{! rc}(%s){-}", $0 ; exit 0
                                  case 1 : gsub(" ","){-} {! bw}(",$0) ; printf "{! bw}(%s){-}", $0 ; exit 0
-                                 case 0 : print $0 ; exit 0
+                                 case 0 : printf "{= Wm}%s{-}", $0 ; exit 0
                               } ;
                             }'
            )
-[[ $BOOKMARK ]] || BOOKMARK=$"<"$"<""NO BOOKMARK"$">"$">"
+#[[ $BOOKMARK ]] || BOOKMARK=$"<"$"<""NO BOOKMARK"$">"$">"
 
 screen -p $WINDOW -X title "${REPO}"
 
@@ -39,4 +49,5 @@ screen -p $WINDOW -X title "${REPO}"
 #                  |                            |
 #                  ~~~~~~~~~~~~                 ~~~~~~~~~~~
 #echo -n $'\033']0\;${STATUS[0]}"{-} {= wdk}(${BOOKMARK}){-}"$'\007'
-echo -n $'\033']0\;${STATUS[0]}"{-} ${BOOKMARK}"$'\007'
+
+echo -n $'\033'"]0;${STATUS_FLAGS}${BOOKMARK}"$'\007'

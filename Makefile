@@ -42,12 +42,12 @@ repo-vs-home: $(FILES)
 
 copy-home-to-repo: $(FILES)
 	@ for i in $^ ; do \
-	  cp ~/$$(basename $$i) $$i ; \
+	  cp ~/$$i $$i ; \
 	done
 
 copy-repo-to-home: $(FILES)
 	for i in $^ ; do \
-	  cp -v $$i ~/$$(basename $$i) ; \
+	  cp -v $$i ~/$$i ; \
 	done
 
 status:
