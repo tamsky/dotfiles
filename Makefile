@@ -15,6 +15,8 @@ FILES := \
 	.inputrc            \
 	.osx                \
 	.screenrc           \
+	.screenrc-caption1  \
+	.screenrc-caption2  \
 	.screenrc-hardstatus1 \
 	.screenrc-hardstatus2 \
 	.wgetrc             \
