@@ -199,8 +199,9 @@ function history_logger() {
 }
 
 # the plumbing that makes it work:
-export PROMPT_COMMAND='history_logger'
-
+export PROMPT_COMMAND='history_logger ; ( ( ~/bin/prompt_lite.sh &) )'
+# double fork to completely ignore/forget about the subtask
+# https://unix.stackexchange.com/questions/277055/synchronous-processes-in-the-background?rq=1
 
 #############
 ## ALIASES ##

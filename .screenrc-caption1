@@ -1,0 +1,2 @@
+caption always
+bind \044 source $HOME/.screenrc-caption2
