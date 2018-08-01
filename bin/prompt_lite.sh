@@ -16,6 +16,7 @@ declare -a STATUS=( $(hg prompt "{status|full}" 2>/dev/null)
 
 # send window title text to screen via fork/exec:
 REPOROOT=$(hg showconfig bundle.mainreporoot 2>/dev/null)
+IN_REPO=$?
 REPO=$(basename $REPOROOT 2>/dev/null)
 DIR=$(basename $PWD 2>/dev/null)
 DIRPARENT=$(dirname $(dirname $PWD) 2>/dev/null)
@@ -39,7 +40,10 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
                               } ;
                             }'
            )
-#[[ $BOOKMARK ]] || BOOKMARK=$"<"$"<""NO BOOKMARK"$">"$">"
+[[ $IN_REPO -eq 0 ]] && {
+    # we are in a hg repo, if no bookmark set, warn us:
+    [[ $BOOKMARK ]] || BOOKMARK=$"<"$"<""NO BOOKMARK"$">"$">" ;
+}
 
 screen -p $WINDOW -X title "${REPO}"
 
