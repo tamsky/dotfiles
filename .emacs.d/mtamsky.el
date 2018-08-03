@@ -31,6 +31,18 @@
 
 (require 'vc-hg)
 
+;; from https://stackoverflow.com/questions/9656311
+(defun ediff-copy-both-to-C ()
+  (interactive)
+  (ediff-copy-diff ediff-current-difference nil 'C nil
+                   (concat
+                    (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                    (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+;; TODO(tamsky): add this new binding to ediff HELP menu:
+(defun add-B-to-ediff-mode-map () (define-key ediff-mode-map "B" 'ediff-copy-both-to-C))
+(add-hook 'ediff-keymap-setup-hook 'add-B-to-ediff-mode-map)
+
+
 ;; https://github.com/nex3/perspective-el
 ;; (package-install 'perspective) moved to custom.el
 (require 'perspective)
@@ -60,6 +72,7 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
+; '((shell . t)) ; 'shell' may be bunk, unless 'sh' is bunk; one of these must be right
  '((sh . t)))
 
 
