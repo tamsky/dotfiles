@@ -32,12 +32,12 @@ FILES := \
 
 home-vs-repo: $(FILES)
 	@ for i in $^ ; do \
-	    diff -u ~/$$i $$i ; \
+	    diff -u $$i ~/$$i ; \
         done ; true
 
 repo-vs-home: $(FILES)
 	@ for i in $^ ; do \
-	    diff -u $$i ~/$$i ; \
+	    diff -u ~/$$i $$i ; \
         done
 
 copy-home-to-repo: $(FILES)
