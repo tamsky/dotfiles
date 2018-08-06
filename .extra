@@ -178,21 +178,31 @@ export FQDNHOSTNAME=$(uname -n)
 
 export I_WANT_A_BROKEN_PS=true
 
-
+#################################
 # history_logger() side effects:
-#   sets global variable '_last_history_number_logged'
-#     $HISTCMD special variable should actually provide this,
-#     But it appears unavailable in functions or at PROMPT_COMMAND eval time.
+#################################
+# sets or updates these global variables:
+# -> '_last_history_number_logged'
+# -> '_last_history_number_had_new_command'
+#
+#  $HISTCMD special bash variable normally provides the last history command number
+#  But it unavailable at PROMPT_COMMAND eval time.
+#  'history 1' or 'fc -l 0' both provide a working alternative, after massaging.
 #
 function history_logger() {
   local last_exit_code=$?   # must be the first command we run in this function
-  local last_history_line=$(history 1)
-  local _match_me="^ *([0-9]+)"
+  local last_history_line=$(fc -l 0)   # was 'history 1'
+  local _match_me="^([0-9]+)[ 	]+([^	 ]+)"
+  export _last_history_number_had_new_command=""
+
+  # TODO(tamsky): can we save a fork and use $UID instead of $(id- u)?
+  #
   # Only log if we are not root:
   if [ "$(id -u)" -ne 0 ]; then
     # only log if history number changes:
     if [[ ${last_history_line} =~ ${_match_me} ]] && [[ ${BASH_REMATCH[1]} != $_last_history_number_logged ]] ; then
       _last_history_number_logged=${BASH_REMATCH[1]} ;
+      _last_history_number_had_new_command=${BASH_REMATCH[2]} ;
       echo "$(date)] ${HOSTNAME%%.*}[$$:S${WINDOW}:${last_exit_code}] ${PWD/~/\~} ${last_history_line}" >> ~/.shell.log;
     fi ;
   fi
@@ -200,7 +210,7 @@ function history_logger() {
 
 # the plumbing that makes it work:
 export PROMPT_COMMAND='history_logger ; ( ( ~/bin/prompt_lite.sh &) )'
-# double fork to completely ignore/forget about the subtask
+# double fork completely ignores and forget about the subtask.
 # https://unix.stackexchange.com/questions/277055/synchronous-processes-in-the-background?rq=1
 
 #############

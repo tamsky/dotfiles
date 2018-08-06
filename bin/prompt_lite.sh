@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # hardstatus text:
-
 declare -a STATUS=( $(hg prompt "{status|full}" 2>/dev/null)
                   )
 [[ "${STATUS[0]}" ]] && [[ "${STATUS[0]}" != "?" ]] && {
@@ -45,7 +44,22 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
     [[ $BOOKMARK ]] || BOOKMARK=$"<"$"<""NO BOOKMARK"$">"$">" ;
 }
 
-screen -p $WINDOW -X title "${REPO}"
+# =~ ^[0-9a-zA-Z_]
+#     ! [[ ${_last_history_number_had_new_command} =~ ^[0-9a-zA-Z] ]] && {
+
+# set the screen title in the background
+( ( screen -p $WINDOW -X title "${REPO}" ) & )
+
+# call wakatime in the background
+[[ ${_last_history_number_had_new_command} ]] &&
+    $(type -p "${_last_history_number_had_new_command}">/dev/null) && {
+        ## we only log if the string is an executable file or function name
+        echo $(date) ${REPO} ${_last_history_number_had_new_command} >> ~/.wakatime.prompt_lite.log ;
+        ( ( wakatime --write --plugin "bash-wakatime/0.1.1" \
+                     --entity-type app \
+                     --project "${REPO:-$PWD}" \
+                     --entity "${_last_history_number_had_new_command}" 2>&1 >/dev/null ) & ) ;
+    }
 
 # emit to SCREEN(1) as a hardstatus string
 #
