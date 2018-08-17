@@ -54,7 +54,7 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
 [[ ${_last_history_number_had_new_command} ]] &&
     $(type -p "${_last_history_number_had_new_command}">/dev/null) && {
         ## we only log if the string is an executable file or function name
-        echo $(date) ${REPO} ${_last_history_number_had_new_command} >> ~/.wakatime.prompt_lite.log ;
+        echo $(date) ${REPO:-$PWD} ${_last_history_number_had_new_command} >> ~/.wakatime.prompt_lite.log ;
         ( ( wakatime --write --plugin "bash-wakatime/0.1.1" \
                      --entity-type app \
                      --project "${REPO:-$PWD}" \
