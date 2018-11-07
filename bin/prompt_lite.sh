@@ -42,6 +42,7 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
 [[ $IN_REPO -eq 0 ]] && {
     # we are in a hg repo, if no bookmark set, warn us:
     [[ $BOOKMARK ]] || BOOKMARK=$"<"$"<""NO BOOKMARK"$">"$">" ;
+    BOOKMARK_NAME=$(head -1 $REPOROOT/.hg/bookmarks.current 2>/dev/null)
 }
 
 # =~ ^[0-9a-zA-Z_]
@@ -54,10 +55,12 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
 [[ ${_last_history_number_had_new_command} ]] &&
     $(type -p "${_last_history_number_had_new_command}">/dev/null) && {
         ## we only log if the string is an executable file or function name
-        echo $(date) ${REPO:-$PWD} ${_last_history_number_had_new_command} >> ~/.wakatime.prompt_lite.log ;
+        SHORT_PWD=$(echo $PWD | sed -e 's@'$HOME'@@' | tr '/' '^' )
+        echo $(date) ${REPO:-$SHORT_PWD} ${BOOKMARK_NAME} ${_last_history_number_had_new_command} >> ~/.wakatime.prompt_lite.log ;
         ( ( wakatime --write --plugin "bash-wakatime/0.1.1" \
                      --entity-type app \
-                     --project "${REPO:-$PWD}" \
+                     --project "${REPO:-$SHORT_PWD}" \
+                     --alternate-project "${BOOKMARK_NAME}" \
                      --entity "${_last_history_number_had_new_command}" 2>&1 >/dev/null ) & ) ;
     }
 
