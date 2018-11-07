@@ -2,6 +2,8 @@
 
 [extensions]
 hgext.bookmarks =
+hgext.mq =
+
 hggit = ~/src/bitbucket/durin42/hg-git/hggit
 strip =
 hgext.convert =
@@ -11,7 +13,6 @@ shelve =
 fsmonitor =
 # https://bitbucket.org/sjl/hg-prompt/src/default/
 prompt = ~/src/bitbucket/sjl/hg-prompt/prompt.py
-
 
 # careful now:
 # purge =
@@ -47,7 +48,18 @@ pu = pull -u
 clean = purge --print
 clean-for-realsies = purge
 
+# default shelve extension:
+##################################
 browse = shelve --list --stat
 shelve-detail = shelve --patch
 visit = unshelve --keep
 read-scroll = unshelve
+
+###################################################
+# 3rd party attic extension
+###################################################
+# https://www.mercurial-scm.org/wiki/AtticExtension
+###################################################
+# attic-shelve
+# attic-unshelve
+# attic-display
