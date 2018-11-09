@@ -49,7 +49,7 @@ BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "boo
 #     ! [[ ${_last_history_number_had_new_command} =~ ^[0-9a-zA-Z] ]] && {
 
 # set the screen title in the background
-( ( screen -p $WINDOW -X title "${REPO}" ) & )
+[[ $WINDOW ]] && ( ( screen -p $WINDOW -X title "${REPO}" ) & )
 
 # call wakatime in the background
 [[ ${_last_history_number_had_new_command} ]] &&
