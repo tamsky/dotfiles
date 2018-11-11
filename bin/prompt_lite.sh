@@ -18,7 +18,7 @@ REPOROOT=$(hg showconfig bundle.mainreporoot 2>/dev/null)
 IN_REPO=$?
 REPO=$(basename $REPOROOT 2>/dev/null)
 DIR=$(basename $PWD 2>/dev/null)
-DIRPARENT=$(dirname $(dirname $PWD) 2>/dev/null)
+DIRPARENT=$(dirname $(dirname "$PWD") 2>/dev/null)
 
 BOOKMARK=$(hg summary 2>/dev/null | awk '/^bookmarks: / { $1="" ;  # delete "bookmarks:" string
                               gsub("^ ","",$0);        # delete leading spaces
