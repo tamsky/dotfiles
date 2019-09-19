@@ -1,6 +1,20 @@
 # -*- conf -*-
+# Found helpful resources
+# - https://github.com/ches/dotfiles/blob/master/.hgrc
+
+[ui]
+merge = emacs
+username = Marc Tamsky <tamsky@users.noreply.github.com>
+paginate = off
+
+# Abort instead of trying to auto-commit when subrepos have changes
+commitsubrepos = no
+
+[subrepos]
+git:allowed = true
 
 [extensions]
+show =
 hgext.bookmarks =
 hgext.mq =
 
@@ -17,10 +31,12 @@ prompt = ~/src/bitbucket/sjl/hg-prompt/prompt.py
 # careful now:
 # purge =
 
-[ui]
-merge = emacs
-username = Marc Tamsky <tamsky@users.noreply.github.com>
-paginate = off
+
+[bookmarks]
+# More git-like behavior: only update the bookmark you are currently using,
+# instead of multiple if they are pointing to the same changeset
+track.current = True
+
 
 [merge-tools]
 emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"
@@ -63,3 +79,11 @@ read-scroll = unshelve
 # attic-shelve
 # attic-unshelve
 # attic-display
+
+
+[mq]
+# Use the secret phase for mq changesets -- see 'hg help phases'
+secret = True
+
+[git]
+blockdothg = false

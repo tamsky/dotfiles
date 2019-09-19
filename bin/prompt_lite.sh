@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ ${INSIDE_EMACS} ]] && exit 0
+
 # hardstatus text:
 declare -a STATUS=( $(hg prompt "{status|full}" 2>/dev/null)
                   )
