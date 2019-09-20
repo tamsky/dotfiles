@@ -308,7 +308,9 @@ fi
 
 
 
+#################
 # BREW additons
+#################
 # source $(brew --prefix nvm)/nvm.sh
 # # BREW installed 'brew cask install google-cloud-sdk'
 # source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
@@ -316,9 +318,14 @@ fi
 # # BREW awscli
 complete -C aws_completer aws
 
+if [ $(brew --prefix 2>/dev/null) ] ; then
+    for i in /usr/local/opt/*/libexec/gnubin ; do
+      export PATH="${i}:${PATH}"
+    done
+fi
 
 # Things not in public VC:
-source ~/.extra_secrets
+source ~/.extra_secrets 2>/dev/null
 
 # because we run after exports, we need to cleanup PATH again here:
 # Cleanup
