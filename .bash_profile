@@ -1,3 +1,5 @@
+# This file is loaded if we are in an interactive shell ($PS1 exists.)
+
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
 
@@ -21,6 +23,9 @@ shopt -s histappend;
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell;
 
+# Adjust screen size (rows/columns) after non-builtin commands
+shopt -s checkwinsize;
+
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
@@ -30,16 +35,16 @@ done;
 unset option;
 
 # Add tab completion for many Bash commands
-if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+if type -P brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
 	source "$(brew --prefix)/etc/bash_completion";
 elif [ -f /etc/bash_completion ]; then
 	source /etc/bash_completion;
 fi;
 
 # Enable tab completion for `g` by marking it as an alias for `git`
-if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
-	complete -o default -o nospace -F _git g;
-fi;
+# if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+# 	complete -o default -o nospace -F _git g;
+# fi;
 
 # Disabled in favor of completion based on contents of known_hosts
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
@@ -51,3 +56,8 @@ complete -W "NSGlobalDomain" defaults;
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+
+# Enable direnv if available
+if type -P direnv > /dev/null; then
+    eval "$(direnv hook bash)"
+fi;
