@@ -22,7 +22,7 @@ export MANPAGER='less -X';
 export LESS="-X";
 
 # Always enable colored `grep` output
-export GREP_OPTIONS="--color=auto";
+# export GREP_OPTIONS="--color=auto"; ## DEPRECATED by Gnu-GREP
 
 # Function to skip duplicate non-empty input lines (without changing line order)
 function dedup_input () {
